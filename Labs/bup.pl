@@ -12,7 +12,7 @@
 
 bup([s]).  % success when one gets s after a sequence of transformations
 bup(P):-
-	write(P), nl, get0(_),
+	write(P), nl, % get0(_),
 	append(Pref, Rest, P),   % P is split into three pieces 
 	append(RHS, Suff, Rest), % P = Pref + RHS + Suff
 	rule(X, RHS),	% bottom up use of rule

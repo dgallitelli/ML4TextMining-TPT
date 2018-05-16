@@ -8,16 +8,20 @@
 % partial elementary English grammar
 
 % --- Productions rules
-s --> np, vp.
-np --> det, n.		% Simple noun phrase
-np --> det, n, pp.	% Noun phrase + prepositional phrase 
-np --> [kirk].
-vp --> v.           % Verb phrase, intransitive verb
-vp --> v, np.		% Verb phrase, verb + complement:  like X
-vp --> v, pp.		% Verb phrase, verb + indirect complement : think of X 
-vp --> v, np, pp.	% Verb phrase, verb + complement + indirect complement : give X to Y 
-vp --> v, pp, pp.	% Verb phrase, verb + indirect complement + indirect complement : talk to X about Y
-pp --> p, np.		% prepositional phrase
+s --> np(Number), vp(Number).
+
+np(Number) --> det(Number), n(Number).
+np(Number) --> det(Number), n(Number), pp.
+np(number: singular) --> [kirk].
+
+vp(Number) --> v([Number, opt]).
+vp(Number) --> v([Number, opt]), np(_).
+vp(Number) --> v([Number, one]), np(_).
+vp(Number) --> v([Number, one]), pp.
+vp(Number) --> v([Number, two]), np(_), pp.
+vp(Number) --> v([Number, two]), pp, pp.
+
+pp --> p, np(_).
 
 % -- Lexicon
 det --> [the].
@@ -33,17 +37,20 @@ n --> [sister].
 n --> [aunt].
 n --> [neighbour].
 n --> [cousin].
-v --> [grumbles].
-v --> [likes].
-v --> [gives].
-v --> [talks].
-v --> [annoys].
-v --> [thinks].
-v --> [hates].
-v --> [cries].
-v --> [barks].
-p --> [of].
-p --> [to].
-p --> [about].
+v --> [talks]; [grumbles]; [likes]; [gives]; [hates].
+v --> [annoys]; [thinks]; [cries]; [barks]; [eats].
+p --> [of]; [to]; [about].
 
+% --- Our definitions
+det(number: singular) --> [a].
+det(number: plural) --> [many]; [some].
+det(number: _) --> [the].
+n(number: singular) --> [dog]; [sister]; [son].
+n(number: plural) --> [dogs]; [sisters]; [sons].
 
+v([number:singular, args:opt]) --> [eats].
+v([number:plural, args:opt]) --> [eat].
+v([number:singular, args:one]) --> [hates].
+v([number:plural, args:one]) --> [hate].
+v([number:singular, args:two]) --> [gives].
+v([number:plural, args:two]) --> [give].
