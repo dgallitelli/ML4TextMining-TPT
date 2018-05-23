@@ -23,6 +23,7 @@ filenames_pos = sorted(glob(op.join('imdb1', 'pos', '*.txt')))
 
 texts_neg = [open(f).read() for f in filenames_neg]
 texts_pos = [open(f).read() for f in filenames_pos]
+stopwords = open("english.stop").read()
 texts = texts_neg + texts_pos
 y = np.ones(len(texts), dtype=np.int)
 y[:len(texts_neg)] = 0.
@@ -49,13 +50,18 @@ def count_words(texts):
         n_samples == number of documents.
         n_features == number of words in vocabulary.
     """
+    # Create the set of stopwords
+    stopwords_set = set()
+    for word in stopwords.split(" "):
+        stopwords_set.add(word)
     # Create the set of words
     words = set()
     for text in texts:
         # Read a string from text
         for word in text.split(" "):
-            # Add to set
-            words.add(word)
+            # Add to set if not stopword
+            if word not in stopwords_set:
+                words.add(word)
     # Create vocabulary <word, index in counts>
     vocabulary = {}
     i = 0
