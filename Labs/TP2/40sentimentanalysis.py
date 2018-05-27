@@ -52,7 +52,7 @@ def count_words(texts):
     """
     # Create the set of stopwords
     stopwords_set = set()
-    for word in stopwords.split(" "):
+    for word in stopwords.split("\n"):
         stopwords_set.add(word)
     # Create the set of words
     words = set()

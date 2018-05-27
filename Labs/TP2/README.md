@@ -23,3 +23,7 @@ Accuracy obtained with **Scikit Logistic Regression classifier**:
 ![stem_accuracy.png](stem_accuracy.png)
 
 Stemming the words does not seem to improve the accuracy of our classifier, just speeding it up a little bit since there are less words to check in the vocabulary.
+
+### Question 4 - Stemming + POS_TAG
+
+![stem2_accuracy.png](stem2_accuracy.png)

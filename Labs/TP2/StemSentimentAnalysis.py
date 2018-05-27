@@ -9,7 +9,9 @@ import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.model_selection import cross_val_score
 
-from nltk import SnowballStemmer
+import nltk
+nltk.download('averaged_perceptron_tagger')
+from nltk import SnowballStemmer, pos_tag
 
 ###############################################################################
 # Load data
@@ -58,17 +60,19 @@ def count_words(texts):
     """
     # Create the set of stopwords
     stopwords_set = set()
-    for word in stopwords.split(" "):
+    for word in stopwords.split("\n"):
         stopwords_set.add(word)
     # Create the set of words
     words = set()
     for text in texts:
         # Read a string from text
         for word in text.split(" "):
-            # Add to set if not stopword
+            # Add to set if not stopword ... 
             if word not in stopwords_set:
                 stemmed_word = stemmer.stem(word)
-                words.add(stemmed_word)
+                # ... and if it's noun [NN*], verb [VB*], adverb [RB*] or adjective [JJ*]
+                if (pos_tag([stemmed_word])[0][1] in ['NN', 'VB', 'RB', 'JJ']):
+                    words.add(stemmed_word)
     # Create vocabulary <word, index in counts>
     vocabulary = {}
     i = 0
@@ -83,7 +87,8 @@ def count_words(texts):
         for word in text.split(" "):
             if word not in stopwords_set:
                 stemmed_word = stemmer.stem(word)
-                counts[k][vocabulary[stemmed_word]] += 1 # term frequency
+                if stemmed_word in vocabulary:
+                    counts[k][vocabulary[stemmed_word]] += 1 # term frequency
         k += 1
     return vocabulary, counts
 
