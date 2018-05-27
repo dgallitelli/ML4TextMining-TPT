@@ -9,6 +9,8 @@ import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.model_selection import cross_val_score
 
+from nltk import SnowballStemmer
+
 ###############################################################################
 # Load data
 print("Loading dataset")
@@ -29,6 +31,10 @@ y = np.ones(len(texts), dtype=np.int)
 y[:len(texts_neg)] = 0.
 
 print("%d documents" % len(texts))
+
+###############################################################################
+# Initialize stemmer - no need to ignore stopwords, I check in count_words
+stemmer = SnowballStemmer("english")
 
 ###############################################################################
 # Start part to fill in
@@ -61,7 +67,8 @@ def count_words(texts):
         for word in text.split(" "):
             # Add to set if not stopword
             if word not in stopwords_set:
-                words.add(word)
+                stemmed_word = stemmer.stem(word)
+                words.add(stemmed_word)
     # Create vocabulary <word, index in counts>
     vocabulary = {}
     i = 0
@@ -75,7 +82,8 @@ def count_words(texts):
     for text in texts:
         for word in text.split(" "):
             if word not in stopwords_set:
-                counts[k][vocabulary[word]] += 1 # term frequency
+                stemmed_word = stemmer.stem(word)
+                counts[k][vocabulary[stemmed_word]] += 1 # term frequency
         k += 1
     return vocabulary, counts
 
