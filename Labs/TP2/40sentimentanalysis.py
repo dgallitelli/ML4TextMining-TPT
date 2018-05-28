@@ -91,13 +91,13 @@ class NB(BaseEstimator, ClassifierMixin):
         # C <- classes = unique values of y
         self.C = np.unique(y)
         # count docs in class = count 0/1 in y
-        counts = np.bincount(y)
+        categories_counts = np.bincount(y)
         self.prior = {}
         self.tct = {}
         for c in self.C:
             self.tct[c] = np.zeros(X.shape[1])
             # compute a priori probability
-            self.prior[c] = counts[int(c)]/self.N
+            self.prior[c] = categories_counts[int(c)]/self.N
             # compute freq of words in class
             for i in range(len(y)):
                 if y[i] == c:
