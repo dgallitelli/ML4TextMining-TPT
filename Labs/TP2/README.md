@@ -4,7 +4,7 @@
 - Carlotta CASTELLUCCIO
 
 ### Discussion about the implementation
-During this tp, we implemented a Naive Bayes classifier, able to do "sentiment analysis" labelling movie reviews as positive or negative. The dataset is composed by 2000 documents of reviews, the second half of which was used for training and the first half for testing.
+During this tp, we implemented a Naive Bayes classifier, able to do "sentiment analysis", labelling movie reviews as positive or negative. The dataset is composed by 2000 documents of reviews, the second half of which was used for training and the first half for testing.
 
 The function **count_words** is the one which builds the vocabulary. The first loop of this function is used to fill the **words** set, containing all the words of all the documents (without the stop words), without repetitions. From this set, we build the **vocabulary**, as a dictionary having an incremental index (the position) as key and the word as value. The other data structure created and returned by this function is the matrix **counts**, of size n_documents x n_features (=n_words): each cell i,j contains the frequency of a term in the document i at the position j of the vocabulary. 
 
