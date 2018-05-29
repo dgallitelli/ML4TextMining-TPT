@@ -1,7 +1,10 @@
+![paristech.png](paristech.png)
 # [SD-TSIA214] TP 2 - Sentiment Analysis
 
 - Davide GALLITELLI
 - Carlotta CASTELLUCCIO
+
+_________________________
 
 ## STEP 1 - CUSTOM NB CLASSIFIER
 
